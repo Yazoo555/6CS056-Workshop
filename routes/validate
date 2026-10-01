@@ -1,0 +1,2 @@
+    $student_data = $request->input([
+    return "Student {$student->name} created successfully!";
