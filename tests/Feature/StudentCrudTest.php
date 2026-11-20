@@ -28,12 +28,12 @@ class StudentCrudTest extends TestCase
 
     public function test_create_form_contains_csrf_token_and_posts_to_students(): void
     {
-        $response = $this->get('/student/create');
+        $response = $this->get('/students/create');
 
         $response->assertStatus(200);
         $response->assertSee('name="_token"', false);
         $response->assertSee('method="POST"', false);
-        $response->assertSee('action="/students"', false);
+        $response->assertSee('action="'.route('students.store').'"', false);
     }
 
     public function test_student_can_be_created_and_stored(): void
@@ -139,7 +139,7 @@ class StudentCrudTest extends TestCase
             'phone' => '333',
         ]);
 
-        $response->assertRedirect('/students');
+        $response->assertRedirect('/students/'.$student->id);
 
         $this->assertDatabaseHas('students', [
             'id' => $student->id,

@@ -35,11 +35,11 @@ class CourseCrudTest extends TestCase
 
     public function test_create_form_contains_csrf_token(): void
     {
-        $response = $this->get('/course/create');
+        $response = $this->get('/courses/create');
 
         $response->assertStatus(200);
         $response->assertSee('name="_token"', false);
-        $response->assertSee('action="/courses"', false);
+        $response->assertSee('action="'.route('courses.store').'"', false);
         $response->assertSee('Easy');
         $response->assertSee('Medium');
         $response->assertSee('Hard');
@@ -119,7 +119,7 @@ class CourseCrudTest extends TestCase
             'is_active' => '0',
         ]);
 
-        $response->assertRedirect('/courses');
+        $response->assertRedirect('/courses/'.$course->id);
 
         $this->assertDatabaseHas('courses', [
             'id' => $course->id,

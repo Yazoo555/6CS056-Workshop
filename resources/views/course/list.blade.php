@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Courses</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background: #f0f0f0; }
-        .success { color: green; font-weight: bold; margin-bottom: 10px; }
-        .actions a, .actions button { margin-right: 6px; }
-    </style>
-</head>
-<body>
-
+<x-layouts.app title="Courses">
     <h1>Courses</h1>
 
-    @if(session('success'))
-        <p class="success">{{ session('success') }}</p>
-    @endif
-
     <p>
-        <a href="/course/create">Create Course</a>
+        <a href="{{ route('courses.create') }}" class="btn">Create Course</a>
     </p>
 
     <table>
@@ -28,7 +11,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Duration (weeks)</th>
+                <th>Duration</th>
                 <th>Fee</th>
                 <th>Difficulty</th>
                 <th>Active</th>
@@ -41,21 +24,15 @@
                     <td>{{ $course->id }}</td>
                     <td>{{ $course->name }}</td>
                     <td>{{ $course->description }}</td>
-                    <td>{{ $course->duration }}</td>
-                    <td>{{ $course->fee }}</td>
+                    <td>{{ $course->duration }} weeks</td>
+                    <td>{{ number_format($course->fee, 2) }}</td>
                     <td>{{ $course->difficulty }}</td>
                     <td>{{ $course->is_active ? 'Yes' : 'No' }}</td>
                     <td class="actions">
-                        <a href="/courses/{{ $course->id }}">View</a>
-                        <a href="/courses/{{ $course->id }}/edit">Edit</a>
+                        <a href="{{ route('courses.show', $course) }}">View</a>
+                        <a href="{{ route('courses.edit', $course) }}">Edit</a>
 
-                        <form action="/courses/{{ $course->id }}"
-                              method="POST"
-                              style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
+                        <x-delete-form :action="route('courses.destroy', $course)" />
                     </td>
                 </tr>
             @empty
@@ -65,6 +42,4 @@
             @endforelse
         </tbody>
     </table>
-
-</body>
-</html>
+</x-layouts.app>
