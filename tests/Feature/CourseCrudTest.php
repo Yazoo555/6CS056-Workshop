@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -10,9 +11,19 @@ class CourseCrudTest extends TestCase
 {
     use DatabaseTransactions;
 
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+    }
+
     private function makeCourse(array $overrides = []): Course
     {
-        return Course::create(array_merge([
+        return $this->user->courses()->create(array_merge([
             'name' => 'Web Development',
             'description' => 'Full stack web development',
             'duration' => 12,

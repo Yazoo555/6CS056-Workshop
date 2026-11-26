@@ -17,6 +17,12 @@ body {
 
 .navbar a.active { border-bottom: 2px solid #ffffff; }
 
+.navbar .logout-form { display: inline; margin-left: 20px; }
+
+.navbar .logout-form button {
+    background: none; border: 0; color: #ffffff; cursor: pointer; font-size: 16px; padding: 0;
+}
+
 .container { flex: 1; width: 100%; max-width: 960px; margin: 0 auto; padding: 24px; }
 
 .footer { background: #f3f4f6; color: #555555; text-align: center; padding: 16px; font-size: 14px; }

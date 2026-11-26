@@ -3,12 +3,20 @@
 namespace Tests\Feature;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class StudentCrudTest extends TestCase
 {
     use DatabaseTransactions;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->actingAs(User::factory()->create());
+    }
 
     public function test_student_list_displays_records(): void
     {
